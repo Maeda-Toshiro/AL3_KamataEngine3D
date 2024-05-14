@@ -4,21 +4,29 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {}
+GameScene::~GameScene() { delete model, delete player; }
 
 void GameScene::Initialize() {
 
-	dxCommon_ = DirectXCommon::GetInstance();
-	input_ = Input::GetInstance();
-	audio_ = Audio::GetInstance();
+	dxCommon = DirectXCommon::GetInstance();
+	input = Input::GetInstance();
+	audio = Audio::GetInstance();
+	textureHandle = TextureManager::Load("");
+	model = Model::Create();
+	viewProjection.Initialize();
+
+	//作成
+	player = new Player();
+	//初期化
+	player->Initialize(model, textureHandle, &viewProjection);
 }
 
-void GameScene::Update() {}
+void GameScene::Update() { player->Update(); }
 
 void GameScene::Draw() {
 
 	// コマンドリストの取得
-	ID3D12GraphicsCommandList* commandList = dxCommon_->GetCommandList();
+	ID3D12GraphicsCommandList* commandList = dxCommon->GetCommandList();
 
 #pragma region 背景スプライト描画
 	// 背景スプライト描画前処理
@@ -31,7 +39,7 @@ void GameScene::Draw() {
 	// スプライト描画後処理
 	Sprite::PostDraw();
 	// 深度バッファクリア
-	dxCommon_->ClearDepthBuffer();
+	dxCommon->ClearDepthBuffer();
 #pragma endregion
 
 #pragma region 3Dオブジェクト描画
@@ -41,6 +49,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+	player->Draw();
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

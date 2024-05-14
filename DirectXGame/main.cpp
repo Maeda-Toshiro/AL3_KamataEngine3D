@@ -1,3 +1,4 @@
+
 #include "Audio.h"
 #include "AxisIndicator.h"
 #include "DirectXCommon.h"
@@ -7,8 +8,9 @@
 #include "TextureManager.h"
 #include "WinApp.h"
 
-// Windowsアプリでのエントリーポイント(main関数)
-int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+    // Windowsアプリでのエントリーポイント(main関数)
+    int WINAPI
+    WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = nullptr;
 	DirectXCommon* dxCommon = nullptr;
 	// 汎用機能
@@ -20,7 +22,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow();
+	win->CreateGameWindow(L"GC2C13マエダ_トシロウ_AL3");
 
 	// DirectX初期化処理
 	dxCommon = DirectXCommon::GetInstance();
@@ -56,7 +58,6 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	primitiveDrawer = PrimitiveDrawer::GetInstance();
 	primitiveDrawer->Initialize();
 #pragma endregion
-
 	// ゲームシーンの初期化
 	gameScene = new GameScene();
 	gameScene->Initialize();
