@@ -15,6 +15,7 @@ void GameScene::Initialize() {
 	model = Model::Create();
 	viewProjection.Initialize();
 
+
 	//作成
 	player = new Player();
 	//初期化
