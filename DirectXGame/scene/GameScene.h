@@ -50,6 +50,7 @@ private: // メンバ変数
 	/// ゲームシーン用
 	uint32_t textureHandle = 0;
 	Model* model = nullptr;
-	ViewProjection viewProjection;
+	ViewProjection viewProjection_;
+	WorldTransform worldTransform_;
 	/// </summary>
 };

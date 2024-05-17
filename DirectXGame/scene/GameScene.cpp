@@ -12,14 +12,16 @@ void GameScene::Initialize() {
 	input = Input::GetInstance();
 	audio = Audio::GetInstance();
 	textureHandle = TextureManager::Load("");
+	//モデルの生成
 	model = Model::Create();
-	viewProjection.Initialize();
+	//ビュープロジェクションの初期化
+	viewProjection_.Initialize();
+	worldTransform_.Initialize();
 
-
-	//作成
+	//自キャラ作成
 	player = new Player();
 	//初期化
-	player->Initialize(model, textureHandle, &viewProjection);
+	player->Initialize(model, textureHandle, &viewProjection_);
 }
 
 void GameScene::Update() { player->Update(); }

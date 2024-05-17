@@ -22,7 +22,7 @@
 
 	// ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow(L"GC2C13マエダ_トシロウ_AL3");
+	win->CreateGameWindow(L"GC2C_13_マエダ_トシロウ_AL3");
 
 	// DirectX初期化処理
 	dxCommon = DirectXCommon::GetInstance();
