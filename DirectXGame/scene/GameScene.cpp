@@ -4,7 +4,14 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() { delete model, delete player; }
+GameScene::~GameScene() {
+	delete model_, delete player,delete modelBlock_;
+
+	for (WorldTransform* worldTransformBlock : worldTransformblocks_) {
+		delete worldTransformBlock;
+	}
+	worldTransformblocks_.clear();
+}
 
 void GameScene::Initialize() {
 
@@ -13,7 +20,8 @@ void GameScene::Initialize() {
 	audio = Audio::GetInstance();
 	textureHandle = TextureManager::Load("");
 	//モデルの生成
-	model = Model::Create();
+	model_ = Model::Create();
+	modelBlock_ = Model::Create();
 	//ビュープロジェクションの初期化
 	viewProjection_.Initialize();
 	worldTransform_.Initialize();
@@ -21,10 +29,21 @@ void GameScene::Initialize() {
 	//自キャラ作成
 	player = new Player();
 	//初期化
-	player->Initialize(model, textureHandle, &viewProjection_);
+	player->Initialize(model_, textureHandle, &viewProjection_);
 }
 
-void GameScene::Update() { player->Update(); }
+void GameScene::Update() { 
+	player->Update(); 
+
+	for (WorldTransform* worldTransformBlock : worldTransformblocks_) {
+		worldTransformBlock->UpdateMatrix();
+
+		//アフィン変換行列の作成
+
+		//定数バッファに転送
+		//worldTransformBlock->TransferMatrix();
+	}
+}
 
 void GameScene::Draw() {
 
