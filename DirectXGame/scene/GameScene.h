@@ -8,6 +8,9 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include "player.h"
+#include "DebugCamera.h"
+
+
 #include<vector>
 
 /// <summary>
@@ -42,18 +45,23 @@ public: // メンバ関数
 	void Draw();
 
 private: // メンバ変数
-	DirectXCommon* dxCommon = nullptr;
-	Input* input = nullptr;
-	Audio* audio = nullptr;
-	Player* player = nullptr;
-	std::vector<WorldTransform*> worldTransformblocks_;
+	DirectXCommon* dxCommon_ = nullptr;
+	Input* input_ = nullptr;
+	Audio* audio_ = nullptr;
+	Player* player_ = nullptr;
+	std::vector<std::vector<WorldTransform*>> worldTransformBlocks_;
 
 	/// <summary>
 	/// ゲームシーン用
-	uint32_t textureHandle = 0;
+	uint32_t textureHandle_ = 0;
 	Model* model_ = nullptr;
 	Model* modelBlock_ = nullptr;
 	ViewProjection viewProjection_;
 	WorldTransform worldTransform_;
 	/// </summary>
+
+	// デバッグカメラ有効
+	bool isDebugCameraActive_ = false;
+	// デバッグカメラ
+	DebugCamera* debugCamera_ = nullptr;
 };

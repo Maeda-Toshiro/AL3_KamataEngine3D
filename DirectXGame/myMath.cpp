@@ -2,23 +2,23 @@
 
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate) {
 
-	Matrix4x4 result = Multiply(Multiply(MakeRotateXMatrix(/*回転のX成分*/), MakeRotateYMatrix(/*回転のY成分*/)), MakeRotateZMatrix(/*回転のZ成分*/));
+	Matrix4x4 result = Multiply(Multiply(MakeRotateXMatrix(rotate.x), MakeRotateYMatrix(rotate.y)), MakeRotateZMatrix(rotate.z));
 
-	result.m[0][0] *= /*拡大縮小のX成分*/;
-	result.m[0][1] *= /*拡大縮小のX成分*/;
-	result.m[0][2] *= /*拡大縮小のX成分*/;
+	result.m[0][0] *= scale.x;
+	result.m[0][1] *= scale.x;
+	result.m[0][2] *= scale.x;
 
-	result.m[1][0] *= /*拡大縮小のY成分*/;
-	result.m[1][1] *= /*拡大縮小のY成分*/;
-	result.m[1][2] *= /*拡大縮小のY成分*/;
+	result.m[1][0] *= scale.y;
+	result.m[1][1] *= scale.y;
+	result.m[1][2] *= scale.y;
 
-	result.m[2][0] *= /*拡大縮小のZ成分*/;
-	result.m[2][1] *= /*拡大縮小のZ成分*/;
-	result.m[2][2] *= /*拡大縮小のZ成分*/;
+	result.m[2][0] *= scale.z;
+	result.m[2][1] *= scale.z;
+	result.m[2][2] *= scale.z;
 
-	result.m[3][0] = /*平行移動のX成分*/;
-	result.m[3][1] = /*平行移動のY成分*/;
-	result.m[3][2] = /*平行移動のZ成分*/;
+	result.m[3][0] = translate.x;
+	result.m[3][1] = translate.y;
+	result.m[3][2] = translate.z;
 
 	return result;
 }
@@ -37,7 +37,9 @@ Matrix4x4 MakeRotateYMatrix(float radian) {
 
 Matrix4x4 MakeRotateZMatrix(float radian) {
 
-	// X軸とY軸の回転行列を作る関数を参考に考えてみよう
+	float cosTheta = std::cos(radian);
+	float sinTheta = std::sin(radian);
+	return {cosTheta, sinTheta, 0, 0, -sinTheta, cosTheta, 0, 0, 0, 0, 1, 0,0,0,  0, 1};
 }
 
 Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
