@@ -56,6 +56,7 @@ private: // メンバ変数
 	uint32_t textureHandle_ = 0;
 	Model* model_ = nullptr;
 	Model* modelBlock_ = nullptr;
+	Model* sphere_ = nullptr;
 	ViewProjection viewProjection_;
 	WorldTransform worldTransform_;
 	/// </summary>

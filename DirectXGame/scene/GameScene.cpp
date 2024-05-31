@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "myMath.h"
 #include <cassert>
+#include"skydome.h"
 
 GameScene::GameScene() {}
 
@@ -17,6 +18,7 @@ GameScene::~GameScene() {
 	worldTransformBlocks_.clear();
 
 	delete debugCamera_;
+	delete sphere_;
 }
 
 void GameScene::Initialize() {
@@ -30,6 +32,7 @@ void GameScene::Initialize() {
 	// 3Dモデルの生成
 	model_ = Model::Create();
 	modelBlock_ = Model::Create();
+	sphere_ = Model::CreateFromOBJ("sphere",true);
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 	// ビュープロジェクションの初期化
