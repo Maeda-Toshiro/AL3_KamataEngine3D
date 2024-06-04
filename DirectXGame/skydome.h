@@ -1,9 +1,9 @@
 #include "Model.h"
 #include "WorldTransform.h"
 
-class skydome {
+class Skydome {
 public:
-	void Intialize();
+	void Intialize(Model* model,ViewProjection* viewProjection);
 
 	void Update();
 

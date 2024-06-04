@@ -2,13 +2,13 @@
 #include "TextureManager.h"
 #include "myMath.h"
 #include <cassert>
-#include"skydome.h"
 
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
 	delete model_;
 
+	delete modelSkydome_;
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
 			delete worldTransformBlock;
@@ -18,7 +18,7 @@ GameScene::~GameScene() {
 	worldTransformBlocks_.clear();
 
 	delete debugCamera_;
-	delete sphere_;
+	
 }
 
 void GameScene::Initialize() {
@@ -32,7 +32,7 @@ void GameScene::Initialize() {
 	// 3Dモデルの生成
 	model_ = Model::Create();
 	modelBlock_ = Model::Create();
-	sphere_ = Model::CreateFromOBJ("sphere",true);
+	modelSkydome_ = Model::CreateFromOBJ("sphere", true);
 	// ワールドトランスフォームの初期化
 	worldTransform_.Initialize();
 	// ビュープロジェクションの初期化
@@ -41,7 +41,12 @@ void GameScene::Initialize() {
 	// 自キャラの生成
 	player_ = new Player();
 	// 自キャラの初期化
-	player_->Initialize(model_, textureHandle_, &viewProjection_);
+	player_->Initialize(modelSkydome_, textureHandle_, &viewProjection_);
+
+	//skydome生成
+	skydome_ = new Skydome;
+
+	skydome_->Intialize(modelSkydome_, &viewProjection_);
 
 	// 要素数
 	const uint32_t kNumBlockVirtical = 10;
@@ -101,6 +106,9 @@ void GameScene::Update() {
 	// 自キャラの更新
 	player_->Update();
 
+	//skydome更新
+	skydome_->Update();
+
 	// 縦横ブロック更新
 	for (std::vector<WorldTransform*> worldTransformBlockTate : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlockYoko : worldTransformBlockTate) {
@@ -141,6 +149,7 @@ void GameScene::Draw() {
 	/// </summary>
 	// 3Dモデル描画
 	//	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	skydome_->Draw();
 	// 自キャラの描画
 	//	player_->Draw();
 

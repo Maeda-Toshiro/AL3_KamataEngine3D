@@ -9,6 +9,7 @@
 #include "WorldTransform.h"
 #include "player.h"
 #include "DebugCamera.h"
+#include "skydome.h"
 
 
 #include<vector>
@@ -56,7 +57,9 @@ private: // メンバ変数
 	uint32_t textureHandle_ = 0;
 	Model* model_ = nullptr;
 	Model* modelBlock_ = nullptr;
-	Model* sphere_ = nullptr;
+	Model* modelSkydome_ = nullptr; 
+	Skydome* skydome_ = nullptr;
+	
 	ViewProjection viewProjection_;
 	WorldTransform worldTransform_;
 	/// </summary>

@@ -1,11 +1,16 @@
 #include "skydome.h"
 
-void skydome::Intialize() {}
-
-void skydome::Update() {}
-
-void skydome::Draw() {
+void Skydome::Intialize(Model*model,ViewProjection*viewProjection) { 
 	
-	model_->Draw(worldTransform_, viewProjection_);
+	model_ = model;
+	viewProjection_ = viewProjection;
+	worldTransform_.Initialize();
+}
+
+void Skydome::Update() {}
+
+void Skydome::Draw() {
+	
+	model_->Draw(worldTransform_, *viewProjection_);
 	
 }
