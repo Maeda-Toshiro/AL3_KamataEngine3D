@@ -9,11 +9,14 @@ class MapChipField {
 	MapChipData mapChipData_;
 
 	void ResetMapchipData();
+	void LoadMapChipCsv(const std::string& filePath);
+
+	MapChipType GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex);
 };
 enum class MapChipType {
 	kBlank,
 	kBlock,
 };
 struct MapChipData {
-	std::vector<std::vector<MapChipType>> date;
+	std::vector<std::vector<MapChipType>> data;
 };

@@ -35,6 +35,8 @@ public: // メンバ関数
 	/// </summary>
 	void Initialize();
 
+	void GenerateBlocks(); 
+
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>

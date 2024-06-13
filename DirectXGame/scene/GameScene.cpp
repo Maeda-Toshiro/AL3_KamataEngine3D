@@ -48,6 +48,13 @@ void GameScene::Initialize() {
 
 	skydome_->Intialize(modelSkydome_, &viewProjection_);
 
+	GenerateBlocks();
+
+	// デバッグカメラの生成
+	debugCamera_ = new DebugCamera(1280, 720);
+}
+
+void GameScene::GenerateBlocks() {
 	// 要素数
 	const uint32_t kNumBlockVirtical = 10;
 	const uint32_t kNumBlockHorizontal = 20;
@@ -74,9 +81,6 @@ void GameScene::Initialize() {
 			}
 		}
 	}
-
-	// デバッグカメラの生成
-	debugCamera_ = new DebugCamera(1280, 720);
 }
 
 void GameScene::Update() {
