@@ -10,6 +10,7 @@
 #include "player.h"
 #include "DebugCamera.h"
 #include "skydome.h"
+#include"MapChipfield.h"
 
 
 #include<vector>
@@ -61,6 +62,7 @@ private: // メンバ変数
 	Model* modelBlock_ = nullptr;
 	Model* modelSkydome_ = nullptr; 
 	Skydome* skydome_ = nullptr;
+	MapChipField* mapChipField_;
 	
 	ViewProjection viewProjection_;
 	WorldTransform worldTransform_;

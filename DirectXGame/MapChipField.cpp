@@ -3,6 +3,7 @@
 #include <map>
 #include<fstream>
 #include<sstream>
+#include<assert.h>
 
 namespace {
 
@@ -74,4 +75,10 @@ MapChipType MapChipField::GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex
 	
 	
 	return MapChipType(); 
+}
+
+Vector3 MapChipField::GetMapChipPositionByIndex(uint32_t xIndex, uint32_t yIndex) { 
+	
+	return Vector3(KBlockWidth * xIndex,KBlockHight * (KNumBlockVirtical-1-yIndex),0); 
+
 }

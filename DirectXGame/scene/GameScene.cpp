@@ -18,6 +18,7 @@ GameScene::~GameScene() {
 	worldTransformBlocks_.clear();
 
 	delete debugCamera_;
+	delete mapChipField_;
 	
 }
 
@@ -46,7 +47,14 @@ void GameScene::Initialize() {
 	//skydome生成
 	skydome_ = new Skydome;
 
+	
+
 	skydome_->Intialize(modelSkydome_, &viewProjection_);
+
+
+//map
+	mapChipField_ = new MapChipField;
+	mapChipField_->LoadMapChipCsv("resourses/blocks.csv");
 
 	GenerateBlocks();
 
