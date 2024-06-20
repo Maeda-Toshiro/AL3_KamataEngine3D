@@ -54,7 +54,7 @@ void GameScene::Initialize() {
 
 //map
 	mapChipField_ = new MapChipField;
-	mapChipField_->LoadMapChipCsv("resourses/blocks.csv");
+	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
 
 	GenerateBlocks();
 
