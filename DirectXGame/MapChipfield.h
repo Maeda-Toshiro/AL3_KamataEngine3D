@@ -1,6 +1,7 @@
 #include<vector>
 #include<stdint.h>
 #include"Vector3.h"
+#include"WorldTransform.h"
 class MapChipField {
 	static inline const float KBlockWidth = 1.0f;
 	static inline const float KBlockHight = 1.0f;
