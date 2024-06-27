@@ -61,6 +61,8 @@ private: // メンバ変数
 	Model* model_ = nullptr;
 	Model* modelBlock_ = nullptr;
 	Model* modelSkydome_ = nullptr; 
+	
+	Player* player_ = nullptr;
 	Skydome* skydome_ = nullptr;
 	MapChipField* mapChipField_;
 	

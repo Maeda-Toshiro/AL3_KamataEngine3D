@@ -5,7 +5,7 @@
 class Player {
 public:
 	// 初期化
-	void Initialize(Model* model, uint32_t textureHandle,ViewProjection* viewProjection);
+	void Initialize(Model* model, uint32_t textureHandle, ViewProjection* viewProjection, const Vector3& position);
 	// 更新
 	void Update();
 	// 描画
