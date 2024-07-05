@@ -20,6 +20,7 @@ GameScene::~GameScene() {
 
 	delete debugCamera_;
 	delete mapChipField_;
+	delete cameraController;
 	
 }
 
@@ -66,6 +67,7 @@ void GameScene::Initialize() {
 	debugCamera_ = new DebugCamera(1280, 720);
 
 
+	cameraController = new CameraController;
 	
 }
 
