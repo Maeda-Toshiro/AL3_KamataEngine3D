@@ -68,6 +68,13 @@ void GameScene::Initialize() {
 
 
 	cameraController = new CameraController;
+	cameraController->Initialize();
+	cameraController->SetTarget(player_);
+	cameraController->Reset();
+
+	CameraController::Rect cameraArea = {12.0f, 100 - 12.0f, 6.0f, 6.0f};
+	cameraController->SetMovableArea(cameraArea);
+
 	
 }
 
@@ -116,12 +123,17 @@ void GameScene::Update() {
 		// ビュープロジェクション行列の転送
 		viewProjection_.TransferMatrix();
 	} else {
+		viewProjection_.matView = cameraController->GetViewProjection().matView;
+		viewProjection_.matProjection = cameraController->GetViewProjection().matProjection;
+		viewProjection_.TransferMatrix();
 		// ビュープロジェクション行列の更新と転送
-		viewProjection_.UpdateMatrix();
+		
 	}
 
 	// 自キャラの更新
 	player_->Update();
+
+	cameraController->Update();
 
 	//skydome更新
 	skydome_->Update();
