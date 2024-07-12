@@ -1,6 +1,8 @@
 #pragma once
 #include "Model.h"
 #include "WorldTransform.h"
+
+class MapChipField;
 /// 自キャラ
 class Player {
 public:
@@ -28,6 +30,8 @@ public:
 
 	const Vector3& GetVelocity() const { return velocity_; }
 	const WorldTransform& GetWorldTransform() const { return worldTransform_; }
+
+	void SetMapChipField(MapChipField* mapChipField) { mapChipField_= mapChipField; }
 
 private:
 	// ワールド変換データ
@@ -67,5 +71,6 @@ private:
 	// ジャンプ初速（上方向）
 	static inline const float kJumpAcceleration = 0.7f;
 
-	
+	//マップチップによるフィールド
+	MapChipField* mapChipField_ = nullptr;
 };
