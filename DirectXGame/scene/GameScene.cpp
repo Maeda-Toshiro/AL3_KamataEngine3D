@@ -4,7 +4,11 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {}
+GameScene::~GameScene() { 
+	delete model_;
+	delete debugcamera_;
+
+}
 
 void GameScene::Initialize() {
 
@@ -12,17 +16,28 @@ void GameScene::Initialize() {
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
 	textureHandle_ = TextureManager::Load("mario.jpg");
+	soundHandle_ = audio_->LoadWave("mokugyo.wav");
+	audio_->PlayWave(soundHandle_);
+	voiceHandle_ = audio_->PlayWave(soundHandle_, true);
 	
 	model_ = Model::Create();
 
 	worldTransform_.Initialize();
 	viewProjection_.Initialize();
 
+	debugcamera_ = new DebugCamera(kWindowWidth, kWindowHeight);
+
 }
 
 void GameScene::Update() { 
 	
+	if (input_->TriggerKey(DIK_SPACE)) {
 
+		audio_->StopWave(voiceHandle_);
+
+	}
+
+	debugcamera_->Update();
 
 }
 
@@ -52,11 +67,11 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
+	model_->Draw(worldTransform_, debugcamera_->GetViewProjection(), textureHandle_);
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
-	delete model_;
+	
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(commandList);
