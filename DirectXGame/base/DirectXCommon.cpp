@@ -13,11 +13,6 @@
 
 using namespace Microsoft::WRL;
 
-namespace {
-const uint32_t kNumRTVDescriptor = 4;
-const uint32_t kLinearRTVStart = 2;
-} // namespace
-
 DirectXCommon* DirectXCommon::GetInstance() {
 	static DirectXCommon instance;
 	return &instance;
@@ -66,8 +61,15 @@ void DirectXCommon::PreDraw() {
 	    D3D12_RESOURCE_STATE_RENDER_TARGET);
 	commandList_->ResourceBarrier(1, &barrier);
 
-	// レンダーターゲット設定。SRGBフォーマットがデフォルト
-	SetRenderTargets(true);
+	// レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
+	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvH = CD3DX12_CPU_DESCRIPTOR_HANDLE(
+	    rtvHeap_->GetCPUDescriptorHandleForHeapStart(), bbIndex,
+	    device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
+	// 深度ステンシルビュー用デスクリプタヒープのハンドルを取得
+	CD3DX12_CPU_DESCRIPTOR_HANDLE dsvH =
+	    CD3DX12_CPU_DESCRIPTOR_HANDLE(dsvHeap_->GetCPUDescriptorHandleForHeapStart());
+	// レンダーターゲットをセット
+	commandList_->OMSetRenderTargets(1, &rtvH, false, &dsvH);
 
 	// 全画面クリア
 	ClearRenderTarget();
@@ -183,22 +185,6 @@ int32_t DirectXCommon::GetBackBufferWidth() const { return backBufferWidth_; }
 
 int32_t DirectXCommon::GetBackBufferHeight() const { return backBufferHeight_; }
 
-void DirectXCommon::SetRenderTargets(bool sRGB) {
-	// バックバッファの番号を取得（2つなので0番か1番）
-	UINT bbIndex = swapChain_->GetCurrentBackBufferIndex();
-	UINT rtvIndex = sRGB ? bbIndex : bbIndex + kLinearRTVStart;
-
-	// レンダーターゲットビュー用ディスクリプタヒープのハンドルを取得
-	CD3DX12_CPU_DESCRIPTOR_HANDLE rtvH = CD3DX12_CPU_DESCRIPTOR_HANDLE(
-	    rtvHeap_->GetCPUDescriptorHandleForHeapStart(), rtvIndex,
-	    device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
-	// 深度ステンシルビュー用デスクリプタヒープのハンドルを取得
-	CD3DX12_CPU_DESCRIPTOR_HANDLE dsvH =
-	    CD3DX12_CPU_DESCRIPTOR_HANDLE(dsvHeap_->GetCPUDescriptorHandleForHeapStart());
-	// レンダーターゲットをセット
-	commandList_->OMSetRenderTargets(1, &rtvH, false, &dsvH);
-}
-
 void DirectXCommon::InitializeDXGIDevice() {
 	HRESULT result = S_FALSE;
 
@@ -218,11 +204,18 @@ void DirectXCommon::InitializeDXGIDevice() {
 
 	// 対応レベルの配列
 	D3D_FEATURE_LEVEL levels[] = {
-	    D3D_FEATURE_LEVEL_12_2, D3D_FEATURE_LEVEL_12_1, D3D_FEATURE_LEVEL_12_0,
-	    D3D_FEATURE_LEVEL_11_1, D3D_FEATURE_LEVEL_11_0,
+	    D3D_FEATURE_LEVEL_12_2,
+	    D3D_FEATURE_LEVEL_12_1,
+	    D3D_FEATURE_LEVEL_12_0,
+	    D3D_FEATURE_LEVEL_11_1,
+	    D3D_FEATURE_LEVEL_11_0,
 	};
 	const char* featureLevelStrings[] = {
-	    "12.2", "12.1", "12.0", "11.1", "11.0",
+	    "12.2", 
+		"12.1", 
+		"12.0", 
+		"11.1", 
+		"11.0",
 	};
 
 	// DXGIファクトリーの生成
@@ -377,7 +370,7 @@ void DirectXCommon::CreateFinalRenderTargets() {
 	// 各種設定をしてディスクリプタヒープを生成
 	D3D12_DESCRIPTOR_HEAP_DESC heapDesc{};
 	heapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV; // レンダーターゲットビュー
-	heapDesc.NumDescriptors = kNumRTVDescriptor;
+	heapDesc.NumDescriptors = swcDesc.BufferCount;
 	result = device_->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(&rtvHeap_));
 	assert(SUCCEEDED(result));
 
@@ -398,13 +391,6 @@ void DirectXCommon::CreateFinalRenderTargets() {
 		renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 		renderTargetViewDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
 		// レンダーターゲットビューの生成
-		device_->CreateRenderTargetView(backBuffers_[i].Get(), &renderTargetViewDesc, handle);
-
-		// Linear版のRTV作成
-		handle = CD3DX12_CPU_DESCRIPTOR_HANDLE(
-		    rtvHeap_->GetCPUDescriptorHandleForHeapStart(), i + kLinearRTVStart,
-		    device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
-		renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		device_->CreateRenderTargetView(backBuffers_[i].Get(), &renderTargetViewDesc, handle);
 	}
 }

@@ -1,23 +1,17 @@
+#include<ViewProjection.h>
 #include<Model.h>
 #include<WorldTransform.h>
-#include<ViewProjection.h>
-//天球
-class Skydome{
-
+class Skydome
+{
 public:
+void Initialize(Model*model,ViewProjection*viewProjection);
 
-//初期化
-	void Initialize(Model* model, ViewProjection* viewProjection);
-//更新
-	void Update();
-//描画
-	void Draw();
+void Update();
+
+void Draw();
 
 private:
-//ワールド変換データ
-WorldTransform worldTransform_;
-//モデル
-Model* model_ = nullptr;
-//
-ViewProjection* viewProjection_ = nullptr;
+	WorldTransform worldTransform_;
+	Model*model_=nullptr;
+	ViewProjection * viewProjection_=nullptr;
 };

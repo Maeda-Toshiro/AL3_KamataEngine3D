@@ -75,8 +75,6 @@ public: // メンバ関数
 	// バックバッファの数を取得
 	size_t GetBackBufferCount() const { return backBuffers_.size(); }
 
-	void SetRenderTargets(bool sRGB);
-
 private: // メンバ変数
 	// ウィンドウズアプリケーション管理
 	WinApp* winApp_;
