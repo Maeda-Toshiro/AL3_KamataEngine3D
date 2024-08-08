@@ -11,9 +11,20 @@ void GameScene::Initialize() {
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
+	textureHandle_ = TextureManager::Load("mario.jpg");
+	
+	model_ = Model::Create();
+
+	worldTransform_.Initialize();
+	viewProjection_.Initialize();
+
 }
 
-void GameScene::Update() {}
+void GameScene::Update() { 
+	
+
+
+}
 
 void GameScene::Draw() {
 
@@ -41,7 +52,7 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
-
+	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
 #pragma endregion
@@ -57,5 +68,7 @@ void GameScene::Draw() {
 	// スプライト描画後処理
 	Sprite::PostDraw();
 
+	
 #pragma endregion
+	delete model_;
 }
