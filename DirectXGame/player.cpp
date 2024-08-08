@@ -1,16 +1,14 @@
-
-#define NOMINMAX
+﻿#define NOMINMAX
 #include "Player.h"
-#include "DirectxCommon.h"
 #include "DebugText.h"
+#include "DirectxCommon.h"
 #include "Easing.h"
 #include "Input.h"
 #include "MapChipField.h"
-#include"myMath.h"
+#include "myMath.h"
 #include <algorithm>
 #include <cassert>
 #include <numbers>
-
 
 void Player::Initialize(Model* model, ViewProjection* viewProjection, const Vector3& position) {
 
@@ -26,8 +24,6 @@ void Player::Initialize(Model* model, ViewProjection* viewProjection, const Vect
 	viewProjection_ = viewProjection;
 }
 
-
-
 void Player::Update() {
 
 	// 移動入力
@@ -39,7 +35,7 @@ void Player::Update() {
 	collisionMapInfo.landing = false;
 	collisionMapInfo.hitWall = false;
 
-	//マップ衝突判定
+	// マップ衝突判定
 	CheckMapCollision(collisionMapInfo);
 
 	// 移動
@@ -49,7 +45,7 @@ void Player::Update() {
 	if (collisionMapInfo.ceiling) {
 		velocity_.y = 0;
 	}
-	//壁接触よる減速
+	// 壁接触よる減速
 	if (collisionMapInfo.hitWall) {
 		velocity_.x *= (1.0f - kAttenuationWall);
 	}
@@ -115,7 +111,8 @@ void Player::InputMove() {
 			velocity_ += acceleration;
 			// 最大速度制限
 			velocity_.x = std::clamp(velocity_.x, -kLimitRunSpeed, kLimitRunSpeed);
-		} else {
+		}
+		else {
 			// 非入力時は移動減衰をかける
 			velocity_.x *= (1.0f - kAttenuation);
 		}
@@ -126,7 +123,8 @@ void Player::InputMove() {
 			// ジャンプ初速
 			velocity_ += Vector3(0, kJumpAcceleration / 60.0f, 0);
 		}
-	} else {
+	}
+	else {
 		// 落下速度
 		velocity_ += Vector3(0, -kGravityAcceleration / 60.0f, 0);
 		// 落下速度制限
@@ -143,7 +141,7 @@ void Player::CheckMapCollision(CollisionMapInfo& info) {
 }
 
 void Player::CheckMapCollisionUp(CollisionMapInfo& info) {
-	// 上昇あり？
+	// 上昇あり
 	if (info.move.y <= 0) {
 		return;
 	}
@@ -175,7 +173,7 @@ void Player::CheckMapCollisionUp(CollisionMapInfo& info) {
 		hit = true;
 	}
 
-	// ブロックにヒット？
+	// ブロックにヒット
 	if (hit) {
 		// 現在座標が壁の外か判定
 		MapChipField::IndexSet indexSetNow;
@@ -195,7 +193,7 @@ void Player::CheckMapCollisionUp(CollisionMapInfo& info) {
 }
 
 void Player::CheckMapCollisionDown(CollisionMapInfo& info) {
-	// 下降あり？
+	// 下降あり
 	if (info.move.y >= 0) {
 		return;
 	}
@@ -355,7 +353,8 @@ void Player::UpdateOnGround(const CollisionMapInfo& info) {
 		if (velocity_.y > 0.0f) {
 			// 空中状態に以降
 			onGround_ = false;
-		} else {
+		} 
+		else {
 			std::array<Vector3, kNumCorner> positionsNew;
 
 			for (uint32_t i = 0; i < positionsNew.size(); ++i) {
@@ -388,8 +387,9 @@ void Player::UpdateOnGround(const CollisionMapInfo& info) {
 				onGround_ = false;
 			}
 		}
-	} else {
-		//着地
+	}
+	else {
+		// 着地
 		if (info.landing) {
 			velocity_.x *= (1.0f - kAttenuationLanding);
 			velocity_.y = 0.0f;

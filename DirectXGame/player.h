@@ -1,5 +1,5 @@
+﻿#pragma once
 
-#pragma once
 #include "Model.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
@@ -9,8 +9,11 @@ class MapChipField;
 /// <summary>
 /// 自キャラ
 /// </summary>
+
 class Player {
+
 public:
+
 	// 左右
 	enum class LRDirection {
 		kRight,
@@ -51,6 +54,7 @@ public:
 	const Vector3& GetVelocity() const { return velocity_; }
 
 private:
+
 	static inline const float kAcceleration = 0.1f;
 	static inline const float kAttenuation = 0.05f;
 	static inline const float kJumpAcceleration = 20.0f;

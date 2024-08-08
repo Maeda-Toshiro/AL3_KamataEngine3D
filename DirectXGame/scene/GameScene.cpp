@@ -1,4 +1,3 @@
-
 #include "GameScene.h"
 #include "TextureManager.h"
 #include "myMath.h"

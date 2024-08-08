@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <vector>
@@ -15,7 +14,6 @@
 #include "Sprite.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
-
 
 /// <summary>
 /// ゲームシーン
