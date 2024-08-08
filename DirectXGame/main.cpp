@@ -1,4 +1,3 @@
-
 #include "Audio.h"
 #include "AxisIndicator.h"
 #include "DirectXCommon.h"
@@ -8,9 +7,8 @@
 #include "TextureManager.h"
 #include "WinApp.h"
 
-    // Windowsアプリでのエントリーポイント(main関数)
-    int WINAPI
-    WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
+// Windowsアプリでのエントリーポイント(main関数)
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int) {
 	WinApp* win = nullptr;
 	DirectXCommon* dxCommon = nullptr;
 	// 汎用機能
@@ -58,6 +56,7 @@
 	primitiveDrawer = PrimitiveDrawer::GetInstance();
 	primitiveDrawer->Initialize();
 #pragma endregion
+
 	// ゲームシーンの初期化
 	gameScene = new GameScene();
 	gameScene->Initialize();

@@ -1,16 +1,17 @@
-#include "Model.h"
-#include "WorldTransform.h"
-
-class Skydome {
+#include<ViewProjection.h>
+#include<Model.h>
+#include<WorldTransform.h>
+class Skydome
+{
 public:
-	void Intialize(Model* model,ViewProjection* viewProjection);
+void Initialize(Model*model,ViewProjection*viewProjection);
 
-	void Update();
+void Update();
 
-	void Draw();
+void Draw();
 
 private:
 	WorldTransform worldTransform_;
-	ViewProjection* viewProjection_ = nullptr;
-	Model* model_ = nullptr;
+	Model*model_=nullptr;
+	ViewProjection * viewProjection_=nullptr;
 };
