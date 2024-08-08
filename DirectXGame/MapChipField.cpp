@@ -1,15 +1,15 @@
-﻿#include "MapChipField.h"
+#include "MapChipField.h"
 #include <cassert>
 #include <fstream>
 #include <map>
 #include <sstream>
 #include <string>
 
-namespace {
-std::map<std::string, MapChipType> mapChipTable = {
-    {"0", MapChipType::kBlank},
-    {"1", MapChipType::kBlock},
-};
+    namespace {
+	std::map<std::string, MapChipType> mapChipTable = {
+	    {"0", MapChipType::kBlank},
+	    {"1", MapChipType::kBlock},
+	};
 }
 
 void MapChipField::ResetMapChipData() {

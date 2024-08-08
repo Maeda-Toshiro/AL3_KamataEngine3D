@@ -1,27 +1,18 @@
-#include "Matrix4x4.h"
-#include "Vector3.h"
+﻿#pragma once
+#include <cmath>
+#include <numbers>
 
-Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rot, const Vector3& translate);
-// 行列の掛け算
-Matrix4x4 MatrixMultiply(Matrix4x4& m1, Matrix4x4& m2);
+class Easing {
+public:
+	//===============線形補間====================//
 
-Vector3 operator+(const Vector3& v);
-Vector3 operator-(const Vector3& v);
+	static float Liner(float startPos, float endPos, float easedT) { return (1.0f - easedT) * startPos + easedT * endPos; }
 
-Vector3& operator+=(Vector3& lhv, const Vector3& rhv);
+	static float EaseOut(float x) { return sinf((x * std::numbers::pi_v<float>) / 2.0f); }
 
-Vector3& operator-=(Vector3& lhv, const Vector3& rhv);
+	static float EaseIn(float x) { return 1.0f - cosf((x * std::numbers::pi_v<float>) / 2.0f); }
 
-Vector3& operator*=(Vector3& v, float s);
+	static float EaseInOut(float x) { return -(cosf(std::numbers::pi_v<float> * x) - 1.0f) / 2.0f; }
 
-Vector3& operator/=(Vector3& v, float s);
-
-const Vector3 operator+(const Vector3& v1, const Vector3& v2);
-
-const Vector3 operator-(const Vector3& v1, const Vector3& v2);
-
-const Vector3 operator*(const Vector3& v, float s);
-
-const Vector3 operator*(float s, const Vector3& v);
-
-const Vector3 operator/(const Vector3& v, float s);
+	//================角度補間===================//
+};
